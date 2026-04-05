@@ -1,13 +1,22 @@
 import Stripe from 'stripe'
 
-export const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-  apiVersion: '2025-02-24.acacia',
-})
+let _stripe: Stripe | null = null
+
+export function getStripe(): Stripe {
+  if (!_stripe) {
+    if (!process.env.STRIPE_SECRET_KEY) {
+      throw new Error('STRIPE_SECRET_KEY is not set')
+    }
+    _stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
+      apiVersion: '2025-02-24.acacia',
+    })
+  }
+  return _stripe
+}
 
 export const PLANS = {
   FREE: {
     name: 'مجاني',
-    nameEn: 'Free',
     price: 0,
     currency: 'EGP',
     cvLimit: 1,
@@ -19,7 +28,6 @@ export const PLANS = {
   },
   PRO: {
     name: 'احترافي',
-    nameEn: 'Pro',
     price: 29,
     currency: 'EGP',
     cvLimit: Infinity,

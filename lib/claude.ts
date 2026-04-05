@@ -1,11 +1,16 @@
 import Anthropic from '@anthropic-ai/sdk'
 import type { CVFormData } from './supabase'
 
-const anthropic = new Anthropic({
-  apiKey: process.env.ANTHROPIC_API_KEY!,
-})
+function getAnthropic(): Anthropic {
+  if (!process.env.ANTHROPIC_API_KEY) {
+    throw new Error('ANTHROPIC_API_KEY is not set')
+  }
+  return new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY })
+}
 
 export async function generateCV(formData: CVFormData): Promise<string> {
+  const anthropic = getAnthropic()
+
   const userDataText = `
 الاسم الكامل: ${formData.fullName}
 المسمى الوظيفي المطلوب: ${formData.jobTitle}
