@@ -1,9 +1,10 @@
 import { SignUp } from '@clerk/nextjs'
+import { AuroraBackground } from '@/components/ui/aurora-background'
 
 export default function SignUpPage() {
   return (
-    <div className="min-h-screen bg-cream flex items-center justify-center p-4" dir="rtl">
-      <div className="w-full max-w-md">
+    <AuroraBackground className="bg-zinc-50" showRadialGradient={true} dir="rtl">
+      <div className="relative z-10 w-full max-w-md px-4">
         <div className="text-center mb-8">
           <a href="/" className="inline-flex items-center gap-2">
             <div className="w-9 h-9 bg-off-black rounded-btn flex items-center justify-center">
@@ -15,6 +16,6 @@ export default function SignUpPage() {
         </div>
         <SignUp />
       </div>
-    </div>
+    </AuroraBackground>
   )
 }

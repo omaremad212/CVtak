@@ -1,4 +1,6 @@
 import type { Config } from 'tailwindcss'
+// eslint-disable-next-line @typescript-eslint/no-require-imports
+const flattenColorPalette = require('tailwindcss/lib/util/flattenColorPalette').default
 
 const config: Config = {
   content: [
@@ -6,6 +8,7 @@ const config: Config = {
     './components/**/*.{js,ts,jsx,tsx,mdx}',
     './app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
+  darkMode: 'class',
   theme: {
     extend: {
       colors: {
@@ -42,11 +45,27 @@ const config: Config = {
         'btn': '4px',
         'card': '8px',
       },
-      transitionProperty: {
-        'transform': 'transform',
+      animation: {
+        aurora: 'aurora 60s linear infinite',
+      },
+      keyframes: {
+        aurora: {
+          from: { backgroundPosition: '50% 50%, 50% 50%' },
+          to: { backgroundPosition: '350% 50%, 350% 50%' },
+        },
       },
     },
   },
-  plugins: [],
+  plugins: [addVariablesForColors],
 }
+
+// Expose every Tailwind color as a CSS variable: var(--blue-500), etc.
+function addVariablesForColors({ addBase, theme }: { addBase: (base: Record<string, Record<string, string>>) => void; theme: (path: string) => Record<string, string> }) {
+  const allColors = flattenColorPalette(theme('colors')) as Record<string, string>
+  const newVars = Object.fromEntries(
+    Object.entries(allColors).map(([key, val]) => [`--${key}`, val])
+  )
+  addBase({ ':root': newVars })
+}
+
 export default config
