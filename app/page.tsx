@@ -1,6 +1,9 @@
 'use client'
 
+'use client'
+
 import Link from 'next/link'
+import Image from 'next/image'
 import { motion } from 'framer-motion'
 import Navbar from '@/components/Navbar'
 import { AuroraBackground } from '@/components/ui/aurora-background'
@@ -276,12 +279,7 @@ export default function HomePage() {
       <footer className="bg-white border-t border-oat py-10">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-            <div className="flex items-center gap-2">
-              <div className="w-7 h-7 bg-off-black rounded-btn flex items-center justify-center">
-                <span className="text-white font-bold text-xs">و</span>
-              </div>
-              <span className="font-bold text-off-black tracking-tighter-xs">وظيفني</span>
-            </div>
+            <Image src="/logo.png" alt="وظيفني" width={100} height={30} className="h-8 w-auto object-contain" />
             <p className="text-xs text-muted">© 2025 وظيفني. جميع الحقوق محفوظة.</p>
             <div className="flex gap-5 text-xs text-muted">
               <Link href="#" className="hover:text-off-black transition-colors">سياسة الخصوصية</Link>

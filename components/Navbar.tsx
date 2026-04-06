@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import Image from 'next/image'
 import { SignInButton, SignUpButton, UserButton, useUser } from '@clerk/nextjs'
 
 export default function Navbar() {
@@ -12,10 +13,14 @@ export default function Navbar() {
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2">
-            <div className="w-8 h-8 bg-off-black rounded-btn flex items-center justify-center">
-              <span className="text-white font-bold text-sm">و</span>
-            </div>
-            <span className="text-lg font-bold text-off-black tracking-tighter-xs">وظيفني</span>
+            <Image
+              src="/logo.png"
+              alt="وظيفني"
+              width={120}
+              height={36}
+              className="h-9 w-auto object-contain"
+              priority
+            />
           </Link>
 
           {/* Nav Links */}
