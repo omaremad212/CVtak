@@ -3,7 +3,8 @@ import { redirect, notFound } from 'next/navigation'
 import { createServerSupabase } from '@/lib/supabase'
 import CVDetailClient from './CVDetailClient'
 
-export default async function CVDetailPage({ params }: { params: { id: string } }) {
+export default async function CVDetailPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params
   const { userId } = await auth()
   if (!userId) redirect('/sign-in')
 
@@ -11,7 +12,7 @@ export default async function CVDetailPage({ params }: { params: { id: string } 
   const { data: cv, error } = await supabase
     .from('cvs')
     .select('*')
-    .eq('id', params.id)
+    .eq('id', id)
     .eq('user_id', userId)
     .single()
 

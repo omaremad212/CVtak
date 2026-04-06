@@ -6,8 +6,9 @@ import DashboardClient from './DashboardClient'
 export default async function DashboardPage({
   searchParams,
 }: {
-  searchParams: { success?: string; canceled?: string }
+  searchParams: Promise<{ success?: string; canceled?: string }>
 }) {
+  const { success, canceled } = await searchParams
   const { userId } = await auth()
   if (!userId) redirect('/sign-in')
 
@@ -35,8 +36,8 @@ export default async function DashboardPage({
       cvs={cvs ?? []}
       isPro={isPro}
       cvCount={cvCount}
-      showSuccess={searchParams.success === 'true'}
-      showCanceled={searchParams.canceled === 'true'}
+      showSuccess={success === 'true'}
+      showCanceled={canceled === 'true'}
     />
   )
 }
