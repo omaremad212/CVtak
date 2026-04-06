@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import { UserButton } from '@clerk/nextjs'
 
 interface CV {
@@ -41,11 +42,8 @@ export default function DashboardClient({ cvs, isPro, cvCount, showSuccess, show
       {/* Header */}
       <header className="bg-white border-b border-oat">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-2">
-            <div className="w-7 h-7 bg-off-black rounded-btn flex items-center justify-center">
-              <span className="text-white font-bold text-xs">و</span>
-            </div>
-            <span className="font-bold text-off-black tracking-tighter-xs">وظيفني</span>
+          <Link href="/">
+            <Image src="/logo.png" alt="وظيفني" width={100} height={30} className="h-8 w-auto object-contain" />
           </Link>
           <UserButton afterSignOutUrl="/" />
         </div>

@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import CVForm from '@/components/CVForm'
 import CVPreview from '@/components/CVPreview'
 import type { CVFormData } from '@/lib/supabase'
@@ -44,11 +45,8 @@ export default function BuilderPage() {
       {/* Header */}
       <header className="bg-white border-b border-oat sticky top-0 z-40">
         <div className="max-w-screen-xl mx-auto px-4 py-4 flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-2">
-            <div className="w-7 h-7 bg-off-black rounded-btn flex items-center justify-center">
-              <span className="text-white font-bold text-xs">و</span>
-            </div>
-            <span className="font-bold text-off-black tracking-tighter-xs">وظيفني</span>
+          <Link href="/">
+            <Image src="/logo.png" alt="وظيفني" width={100} height={30} className="h-8 w-auto object-contain" />
           </Link>
           <p className="text-xs font-semibold text-muted uppercase tracking-widest">إنشاء سيرة ذاتية</p>
           <Link href="/dashboard" className="text-xs text-muted hover:text-off-black transition-colors">
