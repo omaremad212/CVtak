@@ -43,7 +43,7 @@ export default function DashboardClient({ cvs, isPro, cvCount, showSuccess, show
       <header className="bg-white border-b border-oat">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
           <Link href="/">
-            <Image src="/logo.png" alt="وظيفني" width={100} height={30} className="h-8 w-auto object-contain" />
+            <Image src="/logo.png" alt="وظيفني" width={140} height={42} className="h-10 w-auto object-contain" style={{ filter: 'brightness(0)' }} />
           </Link>
           <UserButton afterSignOutUrl="/" />
         </div>

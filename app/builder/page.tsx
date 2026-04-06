@@ -46,7 +46,7 @@ export default function BuilderPage() {
       <header className="bg-white border-b border-oat sticky top-0 z-40">
         <div className="max-w-screen-xl mx-auto px-4 py-4 flex items-center justify-between">
           <Link href="/">
-            <Image src="/logo.png" alt="وظيفني" width={100} height={30} className="h-8 w-auto object-contain" />
+            <Image src="/logo.png" alt="وظيفني" width={140} height={42} className="h-10 w-auto object-contain" style={{ filter: 'brightness(0)' }} />
           </Link>
           <p className="text-xs font-semibold text-muted uppercase tracking-widest">إنشاء سيرة ذاتية</p>
           <Link href="/dashboard" className="text-xs text-muted hover:text-off-black transition-colors">

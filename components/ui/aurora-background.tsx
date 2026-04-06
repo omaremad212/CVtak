@@ -17,30 +17,32 @@ export const AuroraBackground = ({
     <main>
       <div
         className={cn(
-          "relative flex flex-col h-[100vh] items-center justify-center bg-zinc-50 dark:bg-zinc-900 text-slate-950 transition-bg",
+          "relative flex flex-col h-[100vh] items-center justify-center bg-zinc-50 text-slate-950 overflow-hidden",
           className
         )}
         {...props}
       >
-        <div className="absolute inset-0 overflow-hidden" style={{ contain: "layout style paint" }}>
+        {/* Fast gradient — no blur, no blend-mode, only background-position animated (GPU-only) */}
+        <div
+          aria-hidden="true"
+          className="absolute inset-0 pointer-events-none animate-aurora-gradient"
+          style={{
+            background:
+              "linear-gradient(-45deg, #faf9f6, #fff2ea, #fdf6f0, #fff8f2, #ffeedd, #faf9f6)",
+            backgroundSize: "400% 400%",
+          }}
+        />
+        {/* Optional radial vignette to focus attention */}
+        {showRadialGradient && (
           <div
-            className={cn(
-              // Warm aurora matching site palette: orange, amber, cream, sand tones
-              // Performance: single layer only (no after: pseudo-element), reduced blur, lower opacity
-              `[--white-gradient:repeating-linear-gradient(100deg,var(--white)_0%,var(--white)_7%,var(--transparent)_10%,var(--transparent)_12%,var(--white)_16%)]
-            [--aurora:repeating-linear-gradient(100deg,var(--orange-200)_10%,var(--amber-100)_15%,var(--orange-100)_20%,var(--stone-200)_25%,var(--amber-200)_30%)]
-            [background-image:var(--white-gradient),var(--aurora)]
-            [background-size:200%,_150%]
-            [background-position:50%_50%,50%_50%]
-            filter blur-[6px] invert
-            animate-aurora
-            pointer-events-none
-            absolute -inset-[10px] opacity-25 will-change-transform`,
-              showRadialGradient &&
-                `[mask-image:radial-gradient(ellipse_at_80%_0%,black_15%,var(--transparent)_65%)]`
-            )}
+            aria-hidden="true"
+            className="absolute inset-0 pointer-events-none"
+            style={{
+              background:
+                "radial-gradient(ellipse 80% 60% at 70% 0%, rgba(255,86,0,0.07) 0%, transparent 70%)",
+            }}
           />
-        </div>
+        )}
         {children}
       </div>
     </main>

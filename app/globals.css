@@ -70,6 +70,16 @@ body {
   }
 }
 
+/* ── Aurora gradient animation (background-position only — GPU safe, no blur) ── */
+@keyframes aurora-gradient {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+.animate-aurora-gradient {
+  animation: aurora-gradient 12s ease infinite;
+}
+
 /* ── RTL support ── */
 .rtl { direction: rtl; text-align: right; }
 
