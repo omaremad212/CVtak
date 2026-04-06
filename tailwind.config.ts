@@ -9,21 +9,41 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        primary: {
-          50: '#eff6ff',
-          100: '#dbeafe',
-          200: '#bfdbfe',
-          300: '#93c5fd',
-          400: '#60a5fa',
-          500: '#3b82f6',
-          600: '#2563eb',
-          700: '#1d4ed8',
-          800: '#1e40af',
-          900: '#1e3a8a',
+        cream: '#faf9f6',
+        'off-black': '#111111',
+        'dark-neutral': '#313130',
+        'mid-neutral': '#626260',
+        muted: '#7b7b78',
+        oat: '#dedbd6',
+        sand: '#d3cec6',
+        orange: {
+          DEFAULT: '#ff5600',
+          hover: '#e64d00',
         },
       },
       fontFamily: {
-        arabic: ['Cairo', 'Tajawal', 'sans-serif'],
+        sans: ['Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+        arabic: ['Cairo', 'Tajawal', 'Inter', 'sans-serif'],
+        mono: ['ui-monospace', 'SFMono-Regular', 'monospace'],
+      },
+      letterSpacing: {
+        'tightest': '-0.15em',
+        'tighter-xl': '-0.12em',
+        'tighter-lg': '-0.08em',
+        'tighter-md': '-0.05em',
+        'tighter-sm': '-0.03em',
+        'tighter-xs': '-0.02em',
+      },
+      lineHeight: {
+        '100': '1.00',
+        '95': '0.95',
+      },
+      borderRadius: {
+        'btn': '4px',
+        'card': '8px',
+      },
+      transitionProperty: {
+        'transform': 'transform',
       },
     },
   },

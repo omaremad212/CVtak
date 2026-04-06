@@ -1,14 +1,12 @@
 'use client'
 
 import { useState } from 'react'
-import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import CVForm from '@/components/CVForm'
 import CVPreview from '@/components/CVPreview'
 import type { CVFormData } from '@/lib/supabase'
 
 export default function BuilderPage() {
-  const router = useRouter()
   const [isGenerating, setIsGenerating] = useState(false)
   const [cvContent, setCvContent] = useState('')
   const [cvId, setCvId] = useState<string>()
@@ -25,15 +23,10 @@ export default function BuilderPage() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),
       })
-
       const data = await res.json()
 
       if (!res.ok) {
-        if (data.code === 'LIMIT_REACHED') {
-          setError(data.error)
-        } else {
-          setError(data.error || 'حدث خطأ غير متوقع')
-        }
+        setError(data.error || 'حدث خطأ غير متوقع')
         return
       }
 
@@ -47,35 +40,30 @@ export default function BuilderPage() {
   }
 
   return (
-    <div className="min-h-screen bg-slate-50" dir="rtl">
+    <div className="min-h-screen bg-cream" dir="rtl">
       {/* Header */}
-      <header className="bg-white border-b border-slate-200 sticky top-0 z-40">
+      <header className="bg-white border-b border-oat sticky top-0 z-40">
         <div className="max-w-screen-xl mx-auto px-4 py-4 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2">
-            <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
-              <span className="text-white font-bold text-sm">و</span>
+            <div className="w-7 h-7 bg-off-black rounded-btn flex items-center justify-center">
+              <span className="text-white font-bold text-xs">و</span>
             </div>
-            <span className="text-lg font-bold text-blue-600">وظيفني</span>
+            <span className="font-bold text-off-black tracking-tighter-xs">وظيفني</span>
           </Link>
-          <h1 className="text-base font-bold text-slate-700">إنشاء سيرة ذاتية جديدة</h1>
-          <Link
-            href="/dashboard"
-            className="text-sm text-slate-500 hover:text-blue-600 transition-colors"
-          >
+          <p className="text-xs font-semibold text-muted uppercase tracking-widest">إنشاء سيرة ذاتية</p>
+          <Link href="/dashboard" className="text-xs text-muted hover:text-off-black transition-colors">
             لوحة التحكم
           </Link>
         </div>
       </header>
 
       <div className="max-w-screen-xl mx-auto px-4 py-8">
-        {/* Error Banner */}
+        {/* Error */}
         {error && (
-          <div className="mb-6 bg-red-50 border border-red-200 rounded-2xl p-4 flex items-start gap-3">
-            <svg className="w-5 h-5 text-red-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
+          <div className="mb-6 bg-white border border-oat rounded-card p-4 flex items-start gap-3">
+            <span className="w-1.5 h-1.5 bg-orange rounded-full flex-shrink-0 mt-1.5" />
             <div>
-              <p className="text-red-700 text-sm font-medium">{error}</p>
+              <p className="text-sm text-off-black">{error}</p>
               {error.includes('الحد المجاني') && (
                 <button
                   onClick={async () => {
@@ -83,46 +71,45 @@ export default function BuilderPage() {
                     const { url } = await res.json()
                     if (url) window.location.href = url
                   }}
-                  className="mt-2 text-sm bg-blue-600 text-white px-4 py-1.5 rounded-lg hover:bg-blue-700 transition-colors"
+                  className="mt-3 btn-primary text-xs px-4 py-2"
                 >
-                  ترقية إلى الخطة الاحترافية - 29 جنيه/شهر
+                  ترقية إلى الاحترافي — 29 جنيه/شهر
                 </button>
               )}
             </div>
           </div>
         )}
 
-        {/* Success Banner */}
+        {/* Success */}
         {cvId && !error && (
-          <div className="mb-6 bg-green-50 border border-green-200 rounded-2xl p-4 flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <svg className="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-              </svg>
-              <p className="text-green-700 text-sm font-medium">تم حفظ سيرتك الذاتية بنجاح!</p>
+          <div className="mb-6 bg-white border border-oat rounded-card p-4 flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <span className="w-1.5 h-1.5 bg-orange rounded-full" />
+              <p className="text-sm text-off-black font-medium">تم حفظ سيرتك الذاتية بنجاح</p>
             </div>
-            <Link
-              href={`/cv/${cvId}`}
-              className="text-sm text-green-700 hover:text-green-800 font-semibold underline"
-            >
+            <Link href={`/cv/${cvId}`} className="text-xs text-muted hover:text-off-black border border-oat px-3 py-1.5 rounded-btn transition-colors">
               عرض الصفحة الكاملة ←
             </Link>
           </div>
         )}
 
-        {/* Main Layout */}
+        {/* Split layout */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
-          {/* Form Panel */}
-          <div className="bg-white rounded-3xl shadow-sm border border-slate-200 p-6 lg:p-8">
-            <div className="mb-6">
-              <h2 className="text-xl font-extrabold text-slate-800 mb-1">بياناتك الشخصية</h2>
-              <p className="text-sm text-slate-400">أدخل معلوماتك وسيقوم الذكاء الاصطناعي بإنشاء سيرتك الذاتية</p>
+          {/* Form */}
+          <div className="bg-white border border-oat rounded-card p-6 lg:p-8">
+            <div className="mb-8">
+              <p className="text-xs font-semibold text-orange uppercase tracking-widest mb-2">النموذج</p>
+              <h2 className="heading-card">بياناتك الشخصية</h2>
+              <p className="text-xs text-muted mt-1">أدخل معلوماتك وسيقوم الذكاء الاصطناعي بإنشاء سيرتك</p>
             </div>
             <CVForm onGenerate={handleGenerate} isGenerating={isGenerating} />
           </div>
 
-          {/* Preview Panel */}
+          {/* Preview */}
           <div className="lg:sticky lg:top-24">
+            <div className="mb-3">
+              <p className="text-xs font-semibold text-muted uppercase tracking-widest">المعاينة</p>
+            </div>
             <CVPreview content={cvContent} isGenerating={isGenerating} cvId={cvId} />
           </div>
         </div>

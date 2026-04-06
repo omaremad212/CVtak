@@ -10,11 +10,7 @@ export const metadata: Metadata = {
   keywords: 'سيرة ذاتية, وظيفة, ذكاء اصطناعي, CV, مصر',
 }
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <ClerkProvider>
       <html lang="ar" dir="rtl">
@@ -22,11 +18,11 @@ export default function RootLayout({
           <link rel="preconnect" href="https://fonts.googleapis.com" />
           <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
           <link
-            href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800&family=Tajawal:wght@300;400;500;700&display=swap"
+            href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800&family=Tajawal:wght@300;400;500;700&family=Inter:wght@300;400;500;600;700&display=swap"
             rel="stylesheet"
           />
         </head>
-        <body className="font-arabic antialiased">
+        <body className="font-arabic antialiased bg-cream text-off-black">
           {children}
         </body>
       </html>
