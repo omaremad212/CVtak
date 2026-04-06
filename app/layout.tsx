@@ -2,6 +2,8 @@ import type { Metadata } from 'next'
 import { ClerkProvider } from '@clerk/nextjs'
 import './globals.css'
 
+export const dynamic = 'force-dynamic'
+
 export const metadata: Metadata = {
   title: 'وظيفني — منصة السيرة الذاتية بالذكاء الاصطناعي',
   description: 'أنشئ سيرتك الذاتية الاحترافية بالعربية في دقائق باستخدام الذكاء الاصطناعي',
