@@ -4,261 +4,218 @@ import { SignUpButton } from '@clerk/nextjs'
 
 export default function HomePage() {
   return (
-    <div className="min-h-screen bg-white" dir="rtl">
+    <div className="min-h-screen bg-cream" dir="rtl">
       <Navbar />
 
-      {/* Hero Section */}
-      <section className="relative overflow-hidden bg-gradient-to-bl from-blue-50 via-white to-indigo-50 py-20 lg:py-32">
-        <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiMzYjgyZjYiIGZpbGwtb3BhY2l0eT0iMC4wNSI+PHBhdGggZD0iTTM2IDM0di00aC0ydjRoLTR2MmgydjRoMnYtNGg0di0yaC00em0wLTMwVjBoLTJ2NGgtNHYyaDJ2NGgyVjZoNFY0aC00ek02IDM0di00SDR2NGgwdjJoMnY0aDJWNjZoNHYtMkg2eiIvPjwvZz48L2c+PC9zdmc+')] opacity-50" />
-
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      {/* ── Hero ── */}
+      <section className="bg-cream border-b border-oat py-24 lg:py-36">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Badge */}
-          <div className="inline-flex items-center gap-2 bg-blue-100 text-blue-700 px-4 py-1.5 rounded-full text-sm font-semibold mb-6">
-            <span className="w-2 h-2 bg-blue-500 rounded-full animate-pulse" />
+          <div className="inline-flex items-center gap-2 border border-oat rounded-btn px-3 py-1 text-xs font-medium text-muted mb-8 bg-white">
+            <span className="w-1.5 h-1.5 bg-orange rounded-full" />
             مدعوم بأحدث تقنيات الذكاء الاصطناعي
           </div>
 
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-slate-900 mb-6 leading-tight">
-            أنشئ سيرتك الذاتية
+          <h1 className="text-5xl md:text-7xl font-bold text-off-black leading-100 tracking-tighter-lg mb-6">
+            أنشئ سيرتك
             <br />
-            <span className="text-blue-600">بالذكاء الاصطناعي</span>
+            الذاتية بالذكاء
             <br />
-            في دقيقتين فقط
+            <span className="text-orange">الاصطناعي</span>
           </h1>
 
-          <p className="text-lg md:text-xl text-slate-600 mb-10 max-w-2xl mx-auto leading-relaxed">
-            وظيفني يساعدك على كتابة سيرة ذاتية احترافية بالعربية مناسبة لسوق العمل المصري،
-            بضغطة زر واحدة باستخدام أحدث تقنيات الذكاء الاصطناعي.
+          <p className="text-lg text-muted leading-relaxed mb-10 max-w-xl">
+            وظيفني يكتب لك سيرة ذاتية احترافية بالعربية مناسبة لسوق العمل
+            المصري — بضغطة زر واحدة.
           </p>
 
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+          <div className="flex flex-wrap items-center gap-4">
             <SignUpButton mode="modal">
-              <button className="bg-blue-600 hover:bg-blue-700 text-white text-lg font-bold px-8 py-4 rounded-2xl shadow-xl shadow-blue-200 hover:shadow-blue-300 transition-all duration-200 hover:-translate-y-0.5">
-                أنشئ سيرتك الذاتية مجاناً الآن ←
+              <button className="btn-primary text-base px-7 py-3.5">
+                أنشئ سيرتك مجاناً ←
               </button>
             </SignUpButton>
-            <Link
-              href="#features"
-              className="text-slate-600 hover:text-blue-600 text-base font-medium px-6 py-4 rounded-2xl hover:bg-blue-50 transition-colors"
-            >
+            <Link href="#features" className="btn-outlined text-base px-7 py-3.5">
               تعرف على المميزات
             </Link>
           </div>
 
-          <p className="mt-6 text-sm text-slate-400">
-            لا يلزم بطاقة ائتمان · إنشاء سيرة ذاتية مجانية واحدة
+          <p className="mt-5 text-xs text-muted">
+            لا يلزم بطاقة ائتمان · سيرة ذاتية مجانية واحدة
           </p>
         </div>
 
-        {/* Hero Preview Card */}
-        <div className="relative max-w-4xl mx-auto mt-16 px-4">
-          <div className="bg-white rounded-3xl shadow-2xl shadow-blue-100 border border-slate-100 overflow-hidden">
-            <div className="bg-gradient-to-r from-blue-600 to-blue-800 p-6 text-white">
-              <div className="flex items-center gap-3 mb-4">
-                <div className="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center">
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                  </svg>
-                </div>
-                <div>
-                  <p className="font-bold text-lg">أحمد محمد السيد</p>
-                  <p className="text-blue-200 text-sm">مهندس برمجيات أول</p>
-                </div>
+        {/* Hero card preview */}
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 mt-20">
+          <div className="bg-white border border-oat rounded-card overflow-hidden">
+            {/* Card header */}
+            <div className="bg-off-black px-8 py-6 flex items-center justify-between">
+              <div>
+                <p className="text-white font-bold text-xl leading-100 tracking-tighter-xs">أحمد محمد السيد</p>
+                <p className="text-sand text-sm mt-1">مهندس برمجيات أول</p>
               </div>
-              <div className="flex gap-4 text-sm text-blue-200">
-                <span>📍 القاهرة</span>
-                <span>📧 ahmed@email.com</span>
-                <span>📱 01X-XXXX-XXXX</span>
+              <div className="flex items-center gap-2">
+                <span className="w-2 h-2 bg-orange rounded-full" />
+                <span className="text-sand text-xs">تم التوليد</span>
               </div>
             </div>
-            <div className="p-6 grid grid-cols-3 gap-4 text-sm">
-              <div className="col-span-2 space-y-4">
-                <div>
-                  <h3 className="font-bold text-slate-700 border-b border-blue-100 pb-1 mb-2">الملخص المهني</h3>
-                  <div className="space-y-1">
-                    <div className="h-2.5 bg-slate-100 rounded-full w-full" />
-                    <div className="h-2.5 bg-slate-100 rounded-full w-4/5" />
-                    <div className="h-2.5 bg-slate-100 rounded-full w-5/6" />
+            {/* Card body */}
+            <div className="p-8 grid grid-cols-3 gap-8">
+              <div className="col-span-2 space-y-5">
+                {['الملخص المهني', 'الخبرات العملية'].map((section) => (
+                  <div key={section}>
+                    <h3 className="text-xs font-semibold text-muted uppercase tracking-widest mb-3 border-b border-oat pb-2">{section}</h3>
+                    <div className="space-y-2">
+                      <div className="h-2 bg-cream rounded-full w-full" />
+                      <div className="h-2 bg-cream rounded-full w-4/5" />
+                      <div className="h-2 bg-cream rounded-full w-5/6" />
+                    </div>
                   </div>
-                </div>
-                <div>
-                  <h3 className="font-bold text-slate-700 border-b border-blue-100 pb-1 mb-2">الخبرات العملية</h3>
-                  <div className="space-y-1">
-                    <div className="h-2.5 bg-slate-100 rounded-full w-full" />
-                    <div className="h-2.5 bg-slate-100 rounded-full w-3/4" />
-                    <div className="h-2.5 bg-slate-100 rounded-full w-5/6" />
-                  </div>
-                </div>
+                ))}
               </div>
-              <div className="space-y-4">
+              <div className="space-y-5">
                 <div>
-                  <h3 className="font-bold text-slate-700 border-b border-blue-100 pb-1 mb-2">المهارات</h3>
-                  <div className="space-y-1.5">
-                    {['React.js', 'Node.js', 'Python', 'SQL'].map(s => (
-                      <div key={s} className="bg-blue-50 text-blue-700 text-xs px-2 py-1 rounded-lg font-medium">{s}</div>
+                  <h3 className="text-xs font-semibold text-muted uppercase tracking-widest mb-3 border-b border-oat pb-2">المهارات</h3>
+                  <div className="flex flex-wrap gap-2">
+                    {['React', 'Node.js', 'Python', 'SQL'].map((s) => (
+                      <span key={s} className="text-xs px-2 py-1 bg-cream border border-oat rounded-btn text-dark-neutral">{s}</span>
                     ))}
+                  </div>
+                </div>
+                <div>
+                  <h3 className="text-xs font-semibold text-muted uppercase tracking-widest mb-3 border-b border-oat pb-2">التعليم</h3>
+                  <div className="space-y-2">
+                    <div className="h-2 bg-cream rounded-full w-full" />
+                    <div className="h-2 bg-cream rounded-full w-3/4" />
                   </div>
                 </div>
               </div>
             </div>
           </div>
-          {/* Floating badge */}
-          <div className="absolute -top-4 -left-4 bg-green-500 text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-lg">
-            ✓ تم التوليد في 8 ثوانٍ
+          <div className="mt-3 flex items-center gap-2 text-xs text-muted">
+            <span className="w-1.5 h-1.5 bg-orange rounded-full" />
+            تم الإنشاء في 8 ثوانٍ
           </div>
         </div>
       </section>
 
-      {/* Features Section */}
-      <section id="features" className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-extrabold text-slate-900 mb-4">
-              لماذا وظيفني؟
-            </h2>
-            <p className="text-lg text-slate-500 max-w-xl mx-auto">
-              ثلاثة أسباب تجعلنا الخيار الأول لإنشاء السيرة الذاتية
-            </p>
+      {/* ── Features ── */}
+      <section id="features" className="py-24 bg-white border-b border-oat">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="mb-14">
+            <p className="text-xs font-semibold text-orange uppercase tracking-widest mb-3">المميزات</p>
+            <h2 className="heading-section">لماذا وظيفني؟</h2>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {[
               {
-                icon: '🤖',
+                label: '01',
                 title: 'ذكاء اصطناعي متطور',
-                description: 'نستخدم أحدث نماذج الذكاء الاصطناعي من Anthropic لكتابة سيرة ذاتية احترافية مخصصة لك',
-                color: 'blue',
+                body: 'نستخدم أحدث نماذج Claude من Anthropic لكتابة سيرة ذاتية احترافية مخصصة لك تماماً.',
               },
               {
-                icon: '🇪🇬',
+                label: '02',
                 title: 'مناسب لسوق العمل المصري',
-                description: 'السيرة الذاتية مصممة خصيصاً لتلائم متطلبات أصحاب العمل في مصر والدول العربية',
-                color: 'green',
+                body: 'السيرة الذاتية مصممة لتلائم متطلبات أصحاب العمل في مصر والدول العربية.',
               },
               {
-                icon: '⚡',
-                title: 'سريع وسهل الاستخدام',
-                description: 'أدخل بياناتك في دقيقة واحدة واحصل على سيرة ذاتية كاملة واحترافية في ثوانٍ معدودة',
-                color: 'purple',
+                label: '03',
+                title: 'سريع وسهل',
+                body: 'أدخل بياناتك في دقيقة واحدة واحصل على سيرة ذاتية كاملة في ثوانٍ معدودة.',
               },
-            ].map((feature, i) => (
-              <div
-                key={i}
-                className="bg-slate-50 rounded-3xl p-8 hover:shadow-lg transition-shadow duration-300 group"
-              >
-                <div className="text-4xl mb-4">{feature.icon}</div>
-                <h3 className="text-xl font-bold text-slate-800 mb-3">{feature.title}</h3>
-                <p className="text-slate-500 leading-relaxed">{feature.description}</p>
+            ].map((f) => (
+              <div key={f.label} className="card p-7">
+                <p className="text-xs font-mono text-orange mb-4">{f.label}</p>
+                <h3 className="heading-card mb-3">{f.title}</h3>
+                <p className="text-sm text-muted leading-relaxed">{f.body}</p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* How It Works */}
-      <section className="py-20 bg-gradient-to-bl from-blue-50 to-indigo-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-extrabold text-slate-900 mb-4">
-              كيف يعمل؟
-            </h2>
-            <p className="text-lg text-slate-500">ثلاث خطوات بسيطة للحصول على سيرتك الذاتية</p>
+      {/* ── How it works ── */}
+      <section className="py-24 bg-cream border-b border-oat">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="mb-14">
+            <p className="text-xs font-semibold text-orange uppercase tracking-widest mb-3">كيف يعمل</p>
+            <h2 className="heading-section">ثلاث خطوات بسيطة</h2>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 relative">
-            {/* Connector line */}
-            <div className="hidden md:block absolute top-8 right-1/6 left-1/6 h-0.5 bg-blue-200" />
-
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {[
               { step: '١', title: 'أدخل بياناتك', desc: 'أملأ النموذج بمعلوماتك الشخصية وخبراتك ومهاراتك' },
               { step: '٢', title: 'اضغط توليد', desc: 'الذكاء الاصطناعي يحلل بياناتك ويكتب سيرة ذاتية احترافية' },
               { step: '٣', title: 'حمّل وشارك', desc: 'حمّل سيرتك كـ PDF وابدأ في التقدم للوظائف فوراً' },
             ].map((item, i) => (
-              <div key={i} className="text-center relative">
-                <div className="w-16 h-16 bg-blue-600 text-white rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-4 shadow-lg shadow-blue-200">
+              <div key={i} className="flex gap-5">
+                <div className="flex-shrink-0 w-9 h-9 border border-off-black rounded-btn flex items-center justify-center text-sm font-bold text-off-black">
                   {item.step}
                 </div>
-                <h3 className="text-xl font-bold text-slate-800 mb-2">{item.title}</h3>
-                <p className="text-slate-500">{item.desc}</p>
+                <div>
+                  <h3 className="font-semibold text-off-black mb-1 tracking-tighter-xs">{item.title}</h3>
+                  <p className="text-sm text-muted leading-relaxed">{item.desc}</p>
+                </div>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Pricing Section */}
-      <section id="pricing" className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-extrabold text-slate-900 mb-4">
-              الأسعار
-            </h2>
-            <p className="text-lg text-slate-500">ابدأ مجاناً، وطوّر عند الحاجة</p>
+      {/* ── Pricing ── */}
+      <section id="pricing" className="py-24 bg-white border-b border-oat">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="mb-14">
+            <p className="text-xs font-semibold text-orange uppercase tracking-widest mb-3">الأسعار</p>
+            <h2 className="heading-section">ابدأ مجاناً</h2>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-            {/* Free Plan */}
-            <div className="bg-white rounded-3xl border-2 border-slate-200 p-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-3xl">
+            {/* Free */}
+            <div className="card p-8 flex flex-col">
               <div className="mb-6">
-                <h3 className="text-xl font-bold text-slate-800 mb-1">مجاني</h3>
+                <p className="text-xs font-semibold text-muted uppercase tracking-widest mb-3">مجاني</p>
                 <div className="flex items-baseline gap-1">
-                  <span className="text-4xl font-extrabold text-slate-900">0</span>
-                  <span className="text-slate-500 font-medium">جنيه</span>
+                  <span className="text-4xl font-bold text-off-black leading-100 tracking-tighter-md">0</span>
+                  <span className="text-muted text-sm">جنيه</span>
                 </div>
-                <p className="text-slate-400 text-sm mt-1">للأبد</p>
               </div>
-              <ul className="space-y-3 mb-8">
-                {[
-                  'إنشاء سيرة ذاتية واحدة',
-                  'توليد بالذكاء الاصطناعي',
-                  'معاينة مباشرة',
-                  'طباعة',
-                ].map((f, i) => (
-                  <li key={i} className="flex items-center gap-2 text-slate-600">
-                    <svg className="w-5 h-5 text-green-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>
+              <ul className="space-y-3 mb-8 flex-1">
+                {['سيرة ذاتية واحدة', 'توليد بالذكاء الاصطناعي', 'معاينة مباشرة', 'طباعة'].map((f) => (
+                  <li key={f} className="flex items-center gap-3 text-sm text-dark-neutral">
+                    <span className="w-1 h-1 bg-off-black rounded-full flex-shrink-0" />
                     {f}
                   </li>
                 ))}
               </ul>
               <SignUpButton mode="modal">
-                <button className="w-full border-2 border-blue-600 text-blue-600 hover:bg-blue-50 font-bold py-3 px-6 rounded-xl transition-colors">
-                  ابدأ مجاناً
-                </button>
+                <button className="btn-outlined w-full justify-center">ابدأ مجاناً</button>
               </SignUpButton>
             </div>
 
-            {/* Pro Plan */}
-            <div className="bg-blue-600 rounded-3xl p-8 relative overflow-hidden">
-              <div className="absolute top-4 left-4 bg-yellow-400 text-yellow-900 text-xs font-bold px-3 py-1 rounded-full">
+            {/* Pro */}
+            <div className="bg-off-black border border-off-black rounded-card p-8 flex flex-col relative">
+              <span className="absolute top-4 left-4 text-xs bg-orange text-white px-2.5 py-1 rounded-btn font-semibold">
                 الأكثر شعبية
-              </div>
+              </span>
               <div className="mb-6">
-                <h3 className="text-xl font-bold text-white mb-1">احترافي</h3>
+                <p className="text-xs font-semibold text-sand uppercase tracking-widest mb-3">احترافي</p>
                 <div className="flex items-baseline gap-1">
-                  <span className="text-4xl font-extrabold text-white">29</span>
-                  <span className="text-blue-200 font-medium">جنيه / شهر</span>
+                  <span className="text-4xl font-bold text-white leading-100 tracking-tighter-md">29</span>
+                  <span className="text-sand text-sm">جنيه / شهر</span>
                 </div>
-                <p className="text-blue-200 text-sm mt-1">أقل من قهوة يومياً</p>
               </div>
-              <ul className="space-y-3 mb-8">
-                {[
-                  'سير ذاتية غير محدودة',
-                  'تحميل PDF عالي الجودة',
-                  'تخصيص متقدم',
-                  'أولوية في الدعم الفني',
-                ].map((f, i) => (
-                  <li key={i} className="flex items-center gap-2 text-white">
-                    <svg className="w-5 h-5 text-blue-200 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>
+              <ul className="space-y-3 mb-8 flex-1">
+                {['سير ذاتية غير محدودة', 'تحميل PDF عالي الجودة', 'تخصيص متقدم', 'أولوية في الدعم الفني'].map((f) => (
+                  <li key={f} className="flex items-center gap-3 text-sm text-sand">
+                    <span className="w-1 h-1 bg-orange rounded-full flex-shrink-0" />
                     {f}
                   </li>
                 ))}
               </ul>
               <SignUpButton mode="modal">
-                <button className="w-full bg-white text-blue-600 hover:bg-blue-50 font-bold py-3 px-6 rounded-xl transition-colors">
+                <button className="w-full bg-white text-off-black font-semibold py-2.5 px-5 rounded-btn text-sm transition-transform duration-150 hover:scale-105 active:scale-90">
                   ابدأ الآن
                 </button>
               </SignUpButton>
@@ -267,40 +224,39 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="py-20 bg-blue-600">
-        <div className="max-w-4xl mx-auto px-4 text-center">
-          <h2 className="text-3xl md:text-4xl font-extrabold text-white mb-4">
-            جاهز لتبدأ مسيرتك المهنية؟
-          </h2>
-          <p className="text-blue-100 text-lg mb-8">
-            أنشئ سيرتك الذاتية الاحترافية الآن وابدأ في التقدم للوظائف
-          </p>
-          <SignUpButton mode="modal">
-            <button className="bg-white text-blue-600 hover:bg-blue-50 text-lg font-bold px-8 py-4 rounded-2xl shadow-xl transition-all duration-200 hover:-translate-y-0.5">
-              أنشئ سيرتك الذاتية مجاناً ←
-            </button>
-          </SignUpButton>
+      {/* ── CTA ── */}
+      <section className="py-24 bg-cream">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="bg-off-black rounded-card p-12 text-center">
+            <h2 className="text-3xl md:text-4xl font-bold text-white leading-100 tracking-tighter-md mb-4">
+              جاهز لتبدأ مسيرتك المهنية؟
+            </h2>
+            <p className="text-sand text-base mb-8">
+              أنشئ سيرتك الذاتية الاحترافية الآن وابدأ في التقدم للوظائف
+            </p>
+            <SignUpButton mode="modal">
+              <button className="bg-white text-off-black font-bold px-8 py-3.5 rounded-btn text-sm transition-transform duration-150 hover:scale-105 active:scale-90">
+                أنشئ سيرتك مجاناً ←
+              </button>
+            </SignUpButton>
+          </div>
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="bg-slate-900 text-slate-400 py-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      {/* ── Footer ── */}
+      <footer className="bg-white border-t border-oat py-10">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <div className="flex items-center gap-2">
-              <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold text-sm">و</span>
+              <div className="w-7 h-7 bg-off-black rounded-btn flex items-center justify-center">
+                <span className="text-white font-bold text-xs">و</span>
               </div>
-              <span className="text-white font-bold text-lg">وظيفني</span>
+              <span className="font-bold text-off-black tracking-tighter-xs">وظيفني</span>
             </div>
-            <p className="text-sm">
-              © 2025 وظيفني. جميع الحقوق محفوظة.
-            </p>
-            <div className="flex gap-4 text-sm">
-              <Link href="#" className="hover:text-white transition-colors">سياسة الخصوصية</Link>
-              <Link href="#" className="hover:text-white transition-colors">الشروط والأحكام</Link>
-              <Link href="#" className="hover:text-white transition-colors">تواصل معنا</Link>
+            <p className="text-xs text-muted">© 2025 وظيفني. جميع الحقوق محفوظة.</p>
+            <div className="flex gap-5 text-xs text-muted">
+              <Link href="#" className="hover:text-off-black transition-colors">سياسة الخصوصية</Link>
+              <Link href="#" className="hover:text-off-black transition-colors">الشروط والأحكام</Link>
             </div>
           </div>
         </div>
