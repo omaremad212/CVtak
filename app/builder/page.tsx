@@ -32,7 +32,8 @@ export default function BuilderPage() {
       }
 
       setCvContent(data.cv.content)
-      setCvId(data.cv.id)
+      setCvId(data.cv.id ?? undefined)
+      if (data.warning) setError(data.warning)
     } catch {
       setError('حدث خطأ في الاتصال بالخادم. الرجاء المحاولة مرة أخرى.')
     } finally {
