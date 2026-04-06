@@ -45,15 +45,7 @@ const config: Config = {
         'btn': '4px',
         'card': '8px',
       },
-      animation: {
-        aurora: 'aurora 60s linear infinite',
-      },
-      keyframes: {
-        aurora: {
-          from: { backgroundPosition: '50% 50%, 50% 50%' },
-          to: { backgroundPosition: '350% 50%, 350% 50%' },
-        },
-      },
+      // aurora-gradient animation defined in globals.css to avoid Tailwind purge issues
     },
   },
   plugins: [addVariablesForColors],

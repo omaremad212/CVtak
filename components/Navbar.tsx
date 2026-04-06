@@ -16,9 +16,10 @@ export default function Navbar() {
             <Image
               src="/logo.png"
               alt="وظيفني"
-              width={120}
-              height={36}
-              className="h-9 w-auto object-contain"
+              width={180}
+              height={54}
+              className="h-14 w-auto object-contain"
+              style={{ filter: 'brightness(0)' }}
               priority
             />
           </Link>

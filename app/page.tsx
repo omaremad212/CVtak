@@ -279,7 +279,7 @@ export default function HomePage() {
       <footer className="bg-white border-t border-oat py-10">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-            <Image src="/logo.png" alt="وظيفني" width={100} height={30} className="h-8 w-auto object-contain" />
+            <Image src="/logo.png" alt="وظيفني" width={140} height={42} className="h-10 w-auto object-contain" style={{ filter: 'brightness(0)' }} />
             <p className="text-xs text-muted">© 2025 وظيفني. جميع الحقوق محفوظة.</p>
             <div className="flex gap-5 text-xs text-muted">
               <Link href="#" className="hover:text-off-black transition-colors">سياسة الخصوصية</Link>
