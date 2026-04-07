@@ -66,10 +66,25 @@ export async function POST(req: NextRequest) {
   } catch (aiErr) {
     const detail = errorDetail(aiErr)
     console.error('[generate-cv] Claude error:', detail)
-    return NextResponse.json(
-      { error: `فشل توليد السيرة الذاتية: ${detail}` },
-      { status: 500 }
-    )
+
+    // Map known Anthropic errors to clear Arabic messages
+    const raw = detail.toLowerCase()
+    let userMessage: string
+    if (raw.includes('credit balance') || raw.includes('too low') || raw.includes('billing')) {
+      userMessage = 'رصيد API منتهي — يرجى إضافة رصيد على console.anthropic.com'
+    } else if (raw.includes('invalid x-api-key') || raw.includes('authentication')) {
+      userMessage = 'مفتاح Anthropic API غير صحيح — تحقق من ANTHROPIC_API_KEY في إعدادات Vercel'
+    } else if (raw.includes('not set')) {
+      userMessage = 'مفتاح Anthropic API غير موجود — أضف ANTHROPIC_API_KEY في إعدادات Vercel'
+    } else if (raw.includes('model') && raw.includes('not found')) {
+      userMessage = 'النموذج غير متاح — تحقق من اسم الموديل في lib/claude.ts'
+    } else if (raw.includes('rate limit') || raw.includes('429')) {
+      userMessage = 'تجاوزت الحد المسموح — حاول مرة أخرى بعد دقيقة'
+    } else {
+      userMessage = `خطأ في الذكاء الاصطناعي: ${detail}`
+    }
+
+    return NextResponse.json({ error: userMessage }, { status: 500 })
   }
 
   // ── 5. Save ───────────────────────────────────────────────────────────────
