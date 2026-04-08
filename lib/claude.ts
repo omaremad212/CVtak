@@ -1,17 +1,16 @@
-import Anthropic from '@anthropic-ai/sdk'
+import Groq from 'groq-sdk'
 import type { CVFormData } from './supabase'
 
-// Primary model, falls back to 3.5-sonnet if 4-series not available on the key
-const MODEL = 'claude-sonnet-4-5'
+const MODEL = 'llama-3.3-70b-versatile'
 
-function getAnthropic(): Anthropic {
-  const apiKey = process.env.ANTHROPIC_API_KEY
-  if (!apiKey) throw new Error('ANTHROPIC_API_KEY environment variable is not set')
-  return new Anthropic({ apiKey })
+function getGroq(): Groq {
+  const apiKey = process.env.GROQ_API_KEY
+  if (!apiKey) throw new Error('GROQ_API_KEY environment variable is not set')
+  return new Groq({ apiKey })
 }
 
 export async function generateCV(formData: CVFormData): Promise<string> {
-  const anthropic = getAnthropic()
+  const groq = getGroq()
 
   const userDataText = [
     `الاسم الكامل: ${formData.fullName}`,
@@ -29,15 +28,19 @@ export async function generateCV(formData: CVFormData): Promise<string> {
     '',
     'التعليم:',
     formData.education,
-  ].filter(line => line !== undefined).join('\n').trim()
+  ].filter(Boolean).join('\n').trim()
 
-  const message = await anthropic.messages.create({
+  const completion = await groq.chat.completions.create({
     model: MODEL,
     max_tokens: 2048,
     messages: [
       {
+        role: 'system',
+        content: 'أنت خبير في كتابة السير الذاتية الاحترافية باللغة العربية. تكتب سيراً ذاتية منظمة ومناسبة لسوق العمل المصري.',
+      },
+      {
         role: 'user',
-        content: `أنت خبير في كتابة السير الذاتية الاحترافية. اكتب سيرة ذاتية احترافية باللغة العربية للشخص التالي:
+        content: `اكتب سيرة ذاتية احترافية باللغة العربية للشخص التالي:
 
 ${userDataText}
 
@@ -48,13 +51,13 @@ ${userDataText}
 4. مكتوبة بأسلوب رسمي ومحترف
 5. شاملة لجميع الأقسام المهمة (الملخص المهني، الخبرات، المهارات، التعليم)
 
-قدم السيرة الذاتية بتنسيق HTML نظيف. استخدم وسوم h1، h2، p، ul، li فقط. لا تضف CSS أو شروحات.`,
+قدم السيرة الذاتية بتنسيق HTML نظيف. استخدم وسوم h1، h2، p، ul، li فقط. لا تضف CSS أو شروحات أو markdown.`,
       },
     ],
   })
 
-  const content = message.content[0]
-  if (content.type !== 'text') throw new Error(`Unexpected Claude response type: ${content.type}`)
+  const content = completion.choices[0]?.message?.content
+  if (!content) throw new Error('Groq returned an empty response')
 
-  return content.text
+  return content
 }

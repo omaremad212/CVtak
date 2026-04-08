@@ -67,19 +67,19 @@ export async function POST(req: NextRequest) {
     const detail = errorDetail(aiErr)
     console.error('[generate-cv] Claude error:', detail)
 
-    // Map known Anthropic errors to clear Arabic messages
+    // Map known Groq errors to clear Arabic messages
     const raw = detail.toLowerCase()
     let userMessage: string
-    if (raw.includes('credit balance') || raw.includes('too low') || raw.includes('billing')) {
-      userMessage = 'رصيد API منتهي — يرجى إضافة رصيد على console.anthropic.com'
-    } else if (raw.includes('invalid x-api-key') || raw.includes('authentication')) {
-      userMessage = 'مفتاح Anthropic API غير صحيح — تحقق من ANTHROPIC_API_KEY في إعدادات Vercel'
+    if (raw.includes('invalid api key') || raw.includes('authentication') || raw.includes('401')) {
+      userMessage = 'مفتاح Groq API غير صحيح — تحقق من GROQ_API_KEY في إعدادات Vercel'
     } else if (raw.includes('not set')) {
-      userMessage = 'مفتاح Anthropic API غير موجود — أضف ANTHROPIC_API_KEY في إعدادات Vercel'
-    } else if (raw.includes('model') && raw.includes('not found')) {
+      userMessage = 'مفتاح Groq API غير موجود — أضف GROQ_API_KEY في إعدادات Vercel'
+    } else if (raw.includes('model') && (raw.includes('not found') || raw.includes('does not exist'))) {
       userMessage = 'النموذج غير متاح — تحقق من اسم الموديل في lib/claude.ts'
-    } else if (raw.includes('rate limit') || raw.includes('429')) {
+    } else if (raw.includes('rate limit') || raw.includes('429') || raw.includes('tokens per')) {
       userMessage = 'تجاوزت الحد المسموح — حاول مرة أخرى بعد دقيقة'
+    } else if (raw.includes('quota') || raw.includes('billing') || raw.includes('payment')) {
+      userMessage = 'تجاوزت حصة Groq — تحقق من حسابك على console.groq.com'
     } else {
       userMessage = `خطأ في الذكاء الاصطناعي: ${detail}`
     }
