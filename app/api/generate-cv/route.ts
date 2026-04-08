@@ -66,10 +66,25 @@ export async function POST(req: NextRequest) {
   } catch (aiErr) {
     const detail = errorDetail(aiErr)
     console.error('[generate-cv] Claude error:', detail)
-    return NextResponse.json(
-      { error: `فشل توليد السيرة الذاتية: ${detail}` },
-      { status: 500 }
-    )
+
+    // Map known Groq errors to clear Arabic messages
+    const raw = detail.toLowerCase()
+    let userMessage: string
+    if (raw.includes('invalid api key') || raw.includes('authentication') || raw.includes('401')) {
+      userMessage = 'مفتاح Groq API غير صحيح — تحقق من GROQ_API_KEY في إعدادات Vercel'
+    } else if (raw.includes('not set')) {
+      userMessage = 'مفتاح Groq API غير موجود — أضف GROQ_API_KEY في إعدادات Vercel'
+    } else if (raw.includes('model') && (raw.includes('not found') || raw.includes('does not exist'))) {
+      userMessage = 'النموذج غير متاح — تحقق من اسم الموديل في lib/claude.ts'
+    } else if (raw.includes('rate limit') || raw.includes('429') || raw.includes('tokens per')) {
+      userMessage = 'تجاوزت الحد المسموح — حاول مرة أخرى بعد دقيقة'
+    } else if (raw.includes('quota') || raw.includes('billing') || raw.includes('payment')) {
+      userMessage = 'تجاوزت حصة Groq — تحقق من حسابك على console.groq.com'
+    } else {
+      userMessage = `خطأ في الذكاء الاصطناعي: ${detail}`
+    }
+
+    return NextResponse.json({ error: userMessage }, { status: 500 })
   }
 
   // ── 5. Save ───────────────────────────────────────────────────────────────
