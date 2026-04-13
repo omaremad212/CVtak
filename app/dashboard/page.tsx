@@ -14,27 +14,17 @@ export default async function DashboardPage({
 
   const supabase = createServerSupabase()
 
-  const [{ data: cvs }, { data: subscription }] = await Promise.all([
-    supabase
-      .from('cvs')
-      .select('id, title, created_at, form_data')
-      .eq('user_id', userId)
-      .order('created_at', { ascending: false }),
-    supabase
-      .from('subscriptions')
-      .select('status')
-      .eq('user_id', userId)
-      .eq('status', 'active')
-      .single(),
-  ])
+  const { data: cvs } = await supabase
+    .from('cvs')
+    .select('id, title, created_at, form_data')
+    .eq('user_id', userId)
+    .order('created_at', { ascending: false })
 
-  const isPro = !!subscription
   const cvCount = cvs?.length ?? 0
 
   return (
     <DashboardClient
       cvs={cvs ?? []}
-      isPro={isPro}
       cvCount={cvCount}
       showSuccess={success === 'true'}
       showCanceled={canceled === 'true'}

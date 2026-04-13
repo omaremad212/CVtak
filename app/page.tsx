@@ -191,42 +191,19 @@ export default function HomePage() {
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="mb-14">
             <p className="text-xs font-semibold text-orange uppercase tracking-widest mb-3">Pricing</p>
-            <h2 className="heading-section">Start for free</h2>
+            <h2 className="heading-section">Always free</h2>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-3xl">
-            <div className="card p-8 flex flex-col">
+          <div className="max-w-sm">
+            <div className="bg-off-black rounded-card p-8 flex flex-col">
               <div className="mb-6">
-                <p className="text-xs font-semibold text-muted uppercase tracking-widest mb-3">Free</p>
+                <p className="text-xs font-semibold text-sand uppercase tracking-widest mb-3">Free forever</p>
                 <div className="flex items-baseline gap-1">
-                  <span className="text-4xl font-bold text-off-black leading-100 tracking-tighter-md">$0</span>
+                  <span className="text-5xl font-bold text-white leading-100 tracking-tighter-md">$0</span>
+                  <span className="text-sand text-sm">/ always</span>
                 </div>
               </div>
-              <ul className="space-y-3 mb-8 flex-1">
-                {['1 CV', 'AI-powered generation', 'Live preview', 'Print to PDF'].map((f) => (
-                  <li key={f} className="flex items-center gap-3 text-sm text-dark-neutral">
-                    <span className="w-1 h-1 bg-off-black rounded-full flex-shrink-0" />
-                    {f}
-                  </li>
-                ))}
-              </ul>
-              <SignUpButton mode="modal">
-                <button className="btn-outlined w-full justify-center">Get started free</button>
-              </SignUpButton>
-            </div>
-
-            <div className="bg-off-black border border-off-black rounded-card p-8 flex flex-col relative">
-              <span className="absolute top-4 right-4 text-xs bg-orange text-white px-2.5 py-1 rounded-btn font-semibold">
-                Most Popular
-              </span>
-              <div className="mb-6">
-                <p className="text-xs font-semibold text-sand uppercase tracking-widest mb-3">Pro</p>
-                <div className="flex items-baseline gap-1">
-                  <span className="text-4xl font-bold text-white leading-100 tracking-tighter-md">$9</span>
-                  <span className="text-sand text-sm">/ month</span>
-                </div>
-              </div>
-              <ul className="space-y-3 mb-8 flex-1">
-                {['Unlimited CVs', 'High-quality PDF export', 'Advanced customization', 'Priority support'].map((f) => (
+              <ul className="space-y-3 mb-8">
+                {['Unlimited CVs', 'AI-powered generation', 'All 7 CV sections', 'Live preview', 'Print to PDF'].map((f) => (
                   <li key={f} className="flex items-center gap-3 text-sm text-sand">
                     <span className="w-1 h-1 bg-orange rounded-full flex-shrink-0" />
                     {f}
@@ -235,7 +212,7 @@ export default function HomePage() {
               </ul>
               <SignUpButton mode="modal">
                 <button className="w-full bg-white text-off-black font-semibold py-2.5 px-5 rounded-btn text-sm transition-transform duration-150 hover:scale-105 active:scale-90">
-                  Get Pro
+                  Get started free →
                 </button>
               </SignUpButton>
             </div>

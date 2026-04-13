@@ -37,29 +37,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'Please fill in all required fields.' }, { status: 400 })
   }
 
-  // ── 3. Free-tier check (non-fatal if DB not ready) ────────────────────────
-  try {
-    const supabase = createServerSupabase()
-    const [{ count }, { data: subscription }] = await Promise.all([
-      supabase.from('cvs').select('*', { count: 'exact', head: true }).eq('user_id', userId),
-      supabase.from('subscriptions').select('status').eq('user_id', userId).eq('status', 'active').single(),
-    ])
-
-    if (!subscription && (count ?? 0) >= 1) {
-      return NextResponse.json(
-        {
-          error: 'You have reached the free limit (1 CV). Upgrade to Pro for unlimited CVs.',
-          code: 'LIMIT_REACHED',
-        },
-        { status: 403 }
-      )
-    }
-  } catch (dbErr) {
-    // Tables may not exist yet — log and continue
-    console.warn('[generate-cv] DB check skipped:', errorDetail(dbErr))
-  }
-
-  // ── 4. Claude API ─────────────────────────────────────────────────────────
+  // ── 3. AI Generation ─────────────────────────────────────────────────────
   let cvContent: string
   try {
     cvContent = await generateCV(formData)

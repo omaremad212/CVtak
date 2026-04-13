@@ -1,6 +1,5 @@
 'use client'
 
-import { useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { UserButton } from '@clerk/nextjs'
@@ -14,26 +13,12 @@ interface CV {
 
 interface Props {
   cvs: CV[]
-  isPro: boolean
   cvCount: number
   showSuccess: boolean
   showCanceled: boolean
 }
 
-export default function DashboardClient({ cvs, isPro, cvCount, showSuccess, showCanceled }: Props) {
-  const [isCheckingOut, setIsCheckingOut] = useState(false)
-
-  const handleUpgrade = async () => {
-    setIsCheckingOut(true)
-    try {
-      const res = await fetch('/api/checkout', { method: 'POST' })
-      const { url } = await res.json()
-      if (url) window.location.href = url
-    } catch {
-      setIsCheckingOut(false)
-    }
-  }
-
+export default function DashboardClient({ cvs, cvCount, showSuccess, showCanceled }: Props) {
   const formatDate = (d: string) =>
     new Date(d).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })
 
@@ -69,30 +54,12 @@ export default function DashboardClient({ cvs, isPro, cvCount, showSuccess, show
           <div>
             <p className="text-xs font-semibold text-orange uppercase tracking-widest mb-2">Dashboard</p>
             <h1 className="heading-section">Your CVs</h1>
-            <p className="text-xs text-muted mt-2">
-              {isPro
-                ? <span className="inline-flex items-center gap-1"><span className="w-1 h-1 bg-orange rounded-full" />Pro plan</span>
-                : `${cvCount} / 1 free`}
-            </p>
+            <p className="text-xs text-muted mt-2">{cvCount} {cvCount === 1 ? 'CV' : 'CVs'}</p>
           </div>
           <Link href="/builder" className="btn-primary">
             + New CV
           </Link>
         </div>
-
-        {/* Upgrade banner */}
-        {!isPro && cvCount >= 1 && (
-          <div className="mb-8 bg-off-black rounded-card p-7 flex flex-col md:flex-row items-start md:items-center justify-between gap-5">
-            <div>
-              <p className="font-semibold text-white mb-1 tracking-tighter-xs">Unlimited CVs</p>
-              <p className="text-sand text-xs">Upgrade for just $9/month</p>
-            </div>
-            <button onClick={handleUpgrade} disabled={isCheckingOut}
-              className="flex-shrink-0 bg-white text-off-black font-semibold text-sm px-5 py-2.5 rounded-btn transition-transform hover:scale-105 active:scale-90 disabled:opacity-60">
-              {isCheckingOut ? 'Redirecting...' : 'Upgrade now'}
-            </button>
-          </div>
-        )}
 
         {/* Empty state */}
         {cvs.length === 0 ? (
@@ -135,7 +102,7 @@ export default function DashboardClient({ cvs, isPro, cvCount, showSuccess, show
               </div>
             ))}
 
-            {(isPro || cvCount < 1) && (
+            {(true) && (
               <Link href="/builder"
                 className="bg-white border-2 border-dashed border-oat hover:border-off-black rounded-card p-6 flex flex-col items-center justify-center gap-3 transition-colors min-h-[180px] group">
                 <div className="w-9 h-9 bg-cream border border-oat group-hover:border-off-black rounded-btn flex items-center justify-center transition-colors">

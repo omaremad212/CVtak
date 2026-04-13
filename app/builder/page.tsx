@@ -63,18 +63,6 @@ export default function BuilderPage() {
             <span className="w-1.5 h-1.5 bg-orange rounded-full flex-shrink-0 mt-1.5" />
             <div>
               <p className="text-sm text-off-black">{error}</p>
-              {error.includes('free limit') && (
-                <button
-                  onClick={async () => {
-                    const res = await fetch('/api/checkout', { method: 'POST' })
-                    const { url } = await res.json()
-                    if (url) window.location.href = url
-                  }}
-                  className="mt-3 btn-primary text-xs px-4 py-2"
-                >
-                  Upgrade to Pro — $9/month
-                </button>
-              )}
             </div>
           </div>
         )}
