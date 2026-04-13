@@ -22,7 +22,7 @@ export async function POST(req: NextRequest) {
   // ── 1. Auth ──────────────────────────────────────────────────────────────
   const { userId } = await auth()
   if (!userId) {
-    return NextResponse.json({ error: 'يجب تسجيل الدخول أولاً' }, { status: 401 })
+    return NextResponse.json({ error: 'You must be signed in.' }, { status: 401 })
   }
 
   // ── 2. Body ───────────────────────────────────────────────────────────────
@@ -30,36 +30,14 @@ export async function POST(req: NextRequest) {
   try {
     formData = await req.json()
   } catch {
-    return NextResponse.json({ error: 'بيانات غير صالحة' }, { status: 400 })
+    return NextResponse.json({ error: 'Invalid request body.' }, { status: 400 })
   }
 
-  if (!formData.fullName || !formData.jobTitle || !formData.experience || !formData.skills || !formData.education) {
-    return NextResponse.json({ error: 'جميع الحقول المطلوبة يجب ملؤها' }, { status: 400 })
+  if (!formData.fullName || !formData.jobTitle || !formData.summary || !formData.education || !formData.experience || !formData.skills) {
+    return NextResponse.json({ error: 'Please fill in all required fields.' }, { status: 400 })
   }
 
-  // ── 3. Free-tier check (non-fatal if DB not ready) ────────────────────────
-  try {
-    const supabase = createServerSupabase()
-    const [{ count }, { data: subscription }] = await Promise.all([
-      supabase.from('cvs').select('*', { count: 'exact', head: true }).eq('user_id', userId),
-      supabase.from('subscriptions').select('status').eq('user_id', userId).eq('status', 'active').single(),
-    ])
-
-    if (!subscription && (count ?? 0) >= 1) {
-      return NextResponse.json(
-        {
-          error: 'لقد وصلت إلى الحد المجاني (سيرة ذاتية واحدة). قم بالترقية للحصول على سير ذاتية غير محدودة.',
-          code: 'LIMIT_REACHED',
-        },
-        { status: 403 }
-      )
-    }
-  } catch (dbErr) {
-    // Tables may not exist yet — log and continue
-    console.warn('[generate-cv] DB check skipped:', errorDetail(dbErr))
-  }
-
-  // ── 4. Claude API ─────────────────────────────────────────────────────────
+  // ── 3. AI Generation ─────────────────────────────────────────────────────
   let cvContent: string
   try {
     cvContent = await generateCV(formData)
@@ -67,21 +45,21 @@ export async function POST(req: NextRequest) {
     const detail = errorDetail(aiErr)
     console.error('[generate-cv] Claude error:', detail)
 
-    // Map known Groq errors to clear Arabic messages
+    // Map known Groq errors to clear messages
     const raw = detail.toLowerCase()
     let userMessage: string
     if (raw.includes('invalid api key') || raw.includes('authentication') || raw.includes('401')) {
-      userMessage = 'مفتاح Groq API غير صحيح — تحقق من GROQ_API_KEY في إعدادات Vercel'
+      userMessage = 'Invalid Groq API key — check GROQ_API_KEY in Vercel settings.'
     } else if (raw.includes('not set')) {
-      userMessage = 'مفتاح Groq API غير موجود — أضف GROQ_API_KEY في إعدادات Vercel'
+      userMessage = 'Groq API key not configured — add GROQ_API_KEY in Vercel environment variables.'
     } else if (raw.includes('model') && (raw.includes('not found') || raw.includes('does not exist'))) {
-      userMessage = 'النموذج غير متاح — تحقق من اسم الموديل في lib/claude.ts'
+      userMessage = 'AI model not available — check the model name in lib/claude.ts.'
     } else if (raw.includes('rate limit') || raw.includes('429') || raw.includes('tokens per')) {
-      userMessage = 'تجاوزت الحد المسموح — حاول مرة أخرى بعد دقيقة'
+      userMessage = 'Rate limit reached — please try again in a minute.'
     } else if (raw.includes('quota') || raw.includes('billing') || raw.includes('payment')) {
-      userMessage = 'تجاوزت حصة Groq — تحقق من حسابك على console.groq.com'
+      userMessage = 'Groq quota exceeded — check your account at console.groq.com.'
     } else {
-      userMessage = `خطأ في الذكاء الاصطناعي: ${detail}`
+      userMessage = `AI generation error: ${detail}`
     }
 
     return NextResponse.json({ error: userMessage }, { status: 500 })
@@ -113,7 +91,7 @@ export async function POST(req: NextRequest) {
         content: cvContent,
         title: `${formData.jobTitle} - ${formData.fullName}`,
       },
-      warning: `تم توليد السيرة الذاتية لكن لم يتم حفظها: ${detail}`,
+      warning: `CV generated but could not be saved: ${detail}`,
     })
   }
 }
