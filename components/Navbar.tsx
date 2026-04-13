@@ -15,21 +15,20 @@ export default function Navbar() {
           <Link href="/" className="flex items-center gap-2">
             <Image
               src="/logo.png"
-              alt="وظيفني"
+              alt="Wazzifni"
               width={180}
               height={54}
               className="h-14 w-auto object-contain"
-              style={{ filter: 'brightness(0)' }}
               priority
             />
           </Link>
 
           {/* Nav Links */}
           <div className="hidden md:flex items-center gap-6 text-sm text-mid-neutral">
-            <Link href="/#features" className="hover:text-off-black transition-colors">المميزات</Link>
-            <Link href="/#pricing" className="hover:text-off-black transition-colors">الأسعار</Link>
+            <Link href="/#features" className="hover:text-off-black transition-colors">Features</Link>
+            <Link href="/#pricing" className="hover:text-off-black transition-colors">Pricing</Link>
             {isSignedIn && (
-              <Link href="/dashboard" className="hover:text-off-black transition-colors">لوحة التحكم</Link>
+              <Link href="/dashboard" className="hover:text-off-black transition-colors">Dashboard</Link>
             )}
           </div>
 
@@ -40,7 +39,7 @@ export default function Navbar() {
             ) : isSignedIn ? (
               <div className="flex items-center gap-3">
                 <Link href="/builder" className="btn-primary text-xs px-4 py-2">
-                  + سيرة جديدة
+                  + New CV
                 </Link>
                 <UserButton afterSignOutUrl="/" />
               </div>
@@ -48,12 +47,12 @@ export default function Navbar() {
               <div className="flex items-center gap-2">
                 <SignInButton mode="modal">
                   <button className="text-sm text-mid-neutral hover:text-off-black px-4 py-2 transition-colors">
-                    تسجيل الدخول
+                    Sign In
                   </button>
                 </SignInButton>
                 <SignUpButton mode="modal">
                   <button className="btn-primary text-xs px-4 py-2">
-                    ابدأ مجاناً
+                    Get Started Free
                   </button>
                 </SignUpButton>
               </div>

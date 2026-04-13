@@ -32,11 +32,15 @@ export type CV = {
 export type CVFormData = {
   fullName: string
   jobTitle: string
-  experience: string
-  skills: string
-  education: string
-  linkedin?: string
-  phone?: string
-  email?: string
   city?: string
+  email?: string
+  phone?: string
+  linkedin?: string
+  portfolio?: string
+  summary: string
+  education: string
+  experience: string
+  internships?: string
+  languages?: string
+  skills: string
 }

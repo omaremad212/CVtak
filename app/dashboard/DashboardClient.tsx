@@ -35,15 +35,15 @@ export default function DashboardClient({ cvs, isPro, cvCount, showSuccess, show
   }
 
   const formatDate = (d: string) =>
-    new Date(d).toLocaleDateString('ar-EG', { year: 'numeric', month: 'long', day: 'numeric' })
+    new Date(d).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })
 
   return (
-    <div className="min-h-screen bg-cream" dir="rtl">
+    <div className="min-h-screen bg-cream">
       {/* Header */}
       <header className="bg-white border-b border-oat">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
           <Link href="/">
-            <Image src="/logo.png" alt="وظيفني" width={140} height={42} className="h-10 w-auto object-contain" style={{ filter: 'brightness(0)' }} />
+            <Image src="/logo.png" alt="Wazzifni" width={140} height={42} className="h-10 w-auto object-contain" />
           </Link>
           <UserButton afterSignOutUrl="/" />
         </div>
@@ -54,29 +54,29 @@ export default function DashboardClient({ cvs, isPro, cvCount, showSuccess, show
         {showSuccess && (
           <div className="mb-6 bg-white border border-oat rounded-card p-4 flex items-center gap-3">
             <span className="w-1.5 h-1.5 bg-orange rounded-full" />
-            <p className="text-sm text-off-black font-medium">تم الاشتراك في الخطة الاحترافية بنجاح!</p>
+            <p className="text-sm text-off-black font-medium">Pro plan activated successfully!</p>
           </div>
         )}
         {showCanceled && (
           <div className="mb-6 bg-white border border-oat rounded-card p-4 flex items-center gap-3">
             <span className="w-1.5 h-1.5 bg-sand rounded-full" />
-            <p className="text-sm text-muted">تم إلغاء عملية الدفع</p>
+            <p className="text-sm text-muted">Payment canceled.</p>
           </div>
         )}
 
         {/* Page title */}
         <div className="flex items-end justify-between mb-10">
           <div>
-            <p className="text-xs font-semibold text-orange uppercase tracking-widest mb-2">لوحة التحكم</p>
-            <h1 className="heading-section">سيرك الذاتية</h1>
+            <p className="text-xs font-semibold text-orange uppercase tracking-widest mb-2">Dashboard</p>
+            <h1 className="heading-section">Your CVs</h1>
             <p className="text-xs text-muted mt-2">
               {isPro
-                ? <span className="inline-flex items-center gap-1"><span className="w-1 h-1 bg-orange rounded-full" />خطة احترافية</span>
-                : `${cvCount} / 1 مجاني`}
+                ? <span className="inline-flex items-center gap-1"><span className="w-1 h-1 bg-orange rounded-full" />Pro plan</span>
+                : `${cvCount} / 1 free`}
             </p>
           </div>
           <Link href="/builder" className="btn-primary">
-            + جديد
+            + New CV
           </Link>
         </div>
 
@@ -84,12 +84,12 @@ export default function DashboardClient({ cvs, isPro, cvCount, showSuccess, show
         {!isPro && cvCount >= 1 && (
           <div className="mb-8 bg-off-black rounded-card p-7 flex flex-col md:flex-row items-start md:items-center justify-between gap-5">
             <div>
-              <p className="font-semibold text-white mb-1 tracking-tighter-xs">سير ذاتية غير محدودة</p>
-              <p className="text-sand text-xs">قم بالترقية مقابل 29 جنيه فقط شهرياً</p>
+              <p className="font-semibold text-white mb-1 tracking-tighter-xs">Unlimited CVs</p>
+              <p className="text-sand text-xs">Upgrade for just $9/month</p>
             </div>
             <button onClick={handleUpgrade} disabled={isCheckingOut}
               className="flex-shrink-0 bg-white text-off-black font-semibold text-sm px-5 py-2.5 rounded-btn transition-transform hover:scale-105 active:scale-90 disabled:opacity-60">
-              {isCheckingOut ? 'جاري التحويل...' : 'ترقية الآن'}
+              {isCheckingOut ? 'Redirecting...' : 'Upgrade now'}
             </button>
           </div>
         )}
@@ -102,9 +102,9 @@ export default function DashboardClient({ cvs, isPro, cvCount, showSuccess, show
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
               </svg>
             </div>
-            <p className="font-semibold text-off-black mb-1 tracking-tighter-xs">لا توجد سير ذاتية بعد</p>
-            <p className="text-xs text-muted mb-6">أنشئ سيرتك الذاتية الأولى الآن</p>
-            <Link href="/builder" className="btn-primary">إنشاء سيرة ذاتية</Link>
+            <p className="font-semibold text-off-black mb-1 tracking-tighter-xs">No CVs yet</p>
+            <p className="text-xs text-muted mb-6">Create your first CV now</p>
+            <Link href="/builder" className="btn-primary">Create a CV</Link>
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
@@ -125,11 +125,11 @@ export default function DashboardClient({ cvs, isPro, cvCount, showSuccess, show
                 <div className="flex gap-2">
                   <Link href={`/cv/${cv.id}`}
                     className="flex-1 text-center text-xs bg-off-black text-white font-semibold py-2 rounded-btn transition-transform hover:scale-105 active:scale-90">
-                    عرض
+                    View
                   </Link>
                   <Link href={`/builder?edit=${cv.id}`}
                     className="flex-1 text-center text-xs border border-oat text-muted hover:border-off-black hover:text-off-black font-semibold py-2 rounded-btn transition-colors">
-                    تعديل
+                    Edit
                   </Link>
                 </div>
               </div>
@@ -144,7 +144,7 @@ export default function DashboardClient({ cvs, isPro, cvCount, showSuccess, show
                   </svg>
                 </div>
                 <span className="text-xs font-semibold text-muted group-hover:text-off-black transition-colors">
-                  سيرة ذاتية جديدة
+                  New CV
                 </span>
               </Link>
             )}

@@ -12,46 +12,65 @@ function getGroq(): Groq {
 export async function generateCV(formData: CVFormData): Promise<string> {
   const groq = getGroq()
 
-  const userDataText = [
-    `الاسم الكامل: ${formData.fullName}`,
-    `المسمى الوظيفي المطلوب: ${formData.jobTitle}`,
-    `المدينة: ${formData.city || 'غير محدد'}`,
-    `البريد الإلكتروني: ${formData.email || 'غير محدد'}`,
-    `الهاتف: ${formData.phone || 'غير محدد'}`,
-    formData.linkedin ? `LinkedIn: ${formData.linkedin}` : '',
+  const lines: string[] = [
+    `Full Name: ${formData.fullName}`,
+    `Job Title: ${formData.jobTitle}`,
+    formData.city      ? `City: ${formData.city}` : '',
+    formData.email     ? `Email: ${formData.email}` : '',
+    formData.phone     ? `Phone: ${formData.phone}` : '',
+    formData.linkedin  ? `LinkedIn: ${formData.linkedin}` : '',
+    formData.portfolio ? `Portfolio/GitHub: ${formData.portfolio}` : '',
     '',
-    'الخبرات السابقة:',
-    formData.experience,
+    'SUMMARY:',
+    formData.summary,
     '',
-    'المهارات:',
-    formData.skills,
-    '',
-    'التعليم:',
+    'EDUCATION:',
     formData.education,
-  ].filter(Boolean).join('\n').trim()
+    '',
+    'PROFESSIONAL EXPERIENCE:',
+    formData.experience,
+    formData.internships ? `\nINTERNSHIPS & CERTIFICATES:\n${formData.internships}` : '',
+    formData.languages   ? `\nLANGUAGES:\n${formData.languages}` : '',
+    '',
+    'SKILLS:',
+    formData.skills,
+  ].filter(l => l !== undefined)
+
+  const userDataText = lines.join('\n').trim()
+
+  const systemPrompt = `You are a professional CV writer. You produce clean, well-formatted English CVs for international job applications.
+
+You output ONLY valid HTML — no markdown, no explanations, no code fences.
+
+Use exactly these HTML elements:
+• <h1> — candidate name
+• <p class="cv-subtitle"> — job title
+• <hr> — single horizontal rule after the subtitle
+• <p class="cv-contact"> — one line: City | Phone | Email | links with <a href="URL">Label</a>
+• <h2> — section heading (Summary / Education / Professional Experience / Internships & Certificates / Languages / Skills)
+• <p> — paragraph text
+• <p class="cv-date"> — year range like (2022–2026)
+• <ul><li> — bullet points. Nested <ul><li> for sub-bullets under a job.
+• <div class="cv-two-col"> — two-column layout (use for Languages and Skills sections)
+• <strong> — bold text inside list items
+
+Rules:
+1. Write in professional English only.
+2. Enhance and expand the content using strong action verbs and quantified achievements where possible.
+3. For Professional Experience: each job is a <li><strong>Title - Company (Dates)</strong> followed by a nested <ul> of accomplishments.
+4. For Languages: put items side-by-side inside <div class="cv-two-col"> using <p> tags.
+5. For Skills: split skills into two groups and put two <ul> lists side-by-side inside <div class="cv-two-col">.
+6. Omit any section for which no data was provided.
+7. Do NOT include any CSS, <style>, <head>, <body>, or <html> tags.`
 
   const completion = await groq.chat.completions.create({
     model: MODEL,
     max_tokens: 2048,
     messages: [
-      {
-        role: 'system',
-        content: 'أنت خبير في كتابة السير الذاتية الاحترافية باللغة العربية. تكتب سيراً ذاتية منظمة ومناسبة لسوق العمل المصري.',
-      },
+      { role: 'system', content: systemPrompt },
       {
         role: 'user',
-        content: `اكتب سيرة ذاتية احترافية باللغة العربية للشخص التالي:
-
-${userDataText}
-
-يجب أن تكون السيرة الذاتية:
-1. منظمة بشكل احترافي مع عناوين واضحة لكل قسم
-2. مناسبة لسوق العمل المصري
-3. تبرز نقاط القوة والمهارات
-4. مكتوبة بأسلوب رسمي ومحترف
-5. شاملة لجميع الأقسام المهمة (الملخص المهني، الخبرات، المهارات، التعليم)
-
-قدم السيرة الذاتية بتنسيق HTML نظيف. استخدم وسوم h1، h2، p، ul، li فقط. لا تضف CSS أو شروحات أو markdown.`,
+        content: `Generate a professional English CV for the following person:\n\n${userDataText}`,
       },
     ],
   })
@@ -59,5 +78,6 @@ ${userDataText}
   const content = completion.choices[0]?.message?.content
   if (!content) throw new Error('Groq returned an empty response')
 
-  return content
+  // Strip any accidental code fences
+  return content.replace(/^```[a-z]*\n?/i, '').replace(/\n?```$/i, '').trim()
 }
