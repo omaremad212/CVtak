@@ -17,6 +17,8 @@ export default function CVForm({ onGenerate, isGenerating, initialData }: CVForm
     email:       initialData?.email       ?? '',
     phone:       initialData?.phone       ?? '',
     linkedin:    initialData?.linkedin    ?? '',
+    github:      initialData?.github      ?? '',
+    behance:     initialData?.behance     ?? '',
     portfolio:   initialData?.portfolio   ?? '',
     summary:     initialData?.summary     ?? '',
     education:   initialData?.education   ?? '',
@@ -112,14 +114,27 @@ export default function CVForm({ onGenerate, isGenerating, initialData }: CVForm
 
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <Label>LinkedIn URL</Label>
+              <Label>LinkedIn</Label>
               <input type="url" value={formData.linkedin} onChange={handleChange('linkedin')}
                 placeholder="linkedin.com/in/yourprofile" className={fc('linkedin')} />
             </div>
             <div>
-              <Label>Portfolio / GitHub / Behance</Label>
+              <Label>GitHub</Label>
+              <input type="url" value={formData.github} onChange={handleChange('github')}
+                placeholder="github.com/yourname" className={fc('github')} />
+            </div>
+          </div>
+
+          <div className="grid grid-cols-2 gap-3">
+            <div>
+              <Label>Behance</Label>
+              <input type="url" value={formData.behance} onChange={handleChange('behance')}
+                placeholder="behance.net/yourname" className={fc('behance')} />
+            </div>
+            <div>
+              <Label>Portfolio</Label>
               <input type="url" value={formData.portfolio} onChange={handleChange('portfolio')}
-                placeholder="github.com/yourname" className={fc('portfolio')} />
+                placeholder="yourportfolio.com" className={fc('portfolio')} />
             </div>
           </div>
         </div>
