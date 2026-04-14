@@ -82,10 +82,37 @@ body {
 /* ── RTL support ── */
 .rtl { direction: rtl; text-align: right; }
 
-/* ── Print ── */
+/* ── Print — only the CV document, no browser headers/footers ── */
+@page {
+  size: A4 portrait;
+  margin: 0;
+}
+
 @media print {
-  .no-print { display: none !important; }
-  .cv-container { box-shadow: none !important; border: none !important; }
+  /* Hide the entire page by default */
+  body * { visibility: hidden !important; }
+
+  /* Reveal only the CV content */
+  .cv-print-area,
+  .cv-print-area * { visibility: visible !important; }
+
+  /* Stretch the CV to fill the printed page */
+  .cv-print-area {
+    position: fixed !important;
+    inset: 0 !important;
+    padding: 1.8cm 2.2cm !important;
+    box-sizing: border-box !important;
+    background: white !important;
+  }
+
+  /* Strip card chrome */
+  .cv-print-area .cv-wrap {
+    border: none !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    background: white !important;
+  }
 }
 
 /* ── Scrollbar ── */

@@ -28,7 +28,7 @@ export default function DashboardClient({ cvs, cvCount, showSuccess, showCancele
       <header className="bg-white border-b border-oat">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
           <Link href="/">
-            <Image src="/logo.png" alt="Wazzifni" width={140} height={42} className="h-10 w-auto object-contain" />
+            <Image src="/logo.png" alt="Wazzifni" width={180} height={54} className="h-14 w-auto object-contain" />
           </Link>
           <UserButton afterSignOutUrl="/" />
         </div>

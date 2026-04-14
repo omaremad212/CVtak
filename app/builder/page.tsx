@@ -47,7 +47,7 @@ export default function BuilderPage() {
       <header className="bg-white border-b border-oat sticky top-0 z-40">
         <div className="max-w-screen-xl mx-auto px-4 py-4 flex items-center justify-between">
           <Link href="/">
-            <Image src="/logo.png" alt="Wazzifni" width={140} height={42} className="h-10 w-auto object-contain" />
+            <Image src="/logo.png" alt="Wazzifni" width={180} height={54} className="h-14 w-auto object-contain" />
           </Link>
           <p className="text-xs font-semibold text-muted uppercase tracking-widest">CV Builder</p>
           <Link href="/dashboard" className="text-xs text-muted hover:text-off-black transition-colors">

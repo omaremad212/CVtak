@@ -36,6 +36,8 @@ export type CVFormData = {
   email?: string
   phone?: string
   linkedin?: string
+  github?: string
+  behance?: string
   portfolio?: string
   summary: string
   education: string
