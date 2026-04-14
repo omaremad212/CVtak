@@ -23,11 +23,6 @@ const CV_STYLES = `
   .cv-doc .cv-two-col { display: grid; grid-template-columns: 1fr 1fr; column-gap: 1.5em; }
   .cv-doc .cv-two-col ul { margin-top: 0; }
   .cv-doc strong { font-weight: bold; }
-  @media print {
-    .no-print { display: none !important; }
-    body { background: white !important; }
-    .cv-wrap { box-shadow: none !important; border: none !important; border-radius: 0 !important; padding: 0 !important; }
-  }
 `
 
 export default function CVPreview({ content, isGenerating, cvId }: CVPreviewProps) {
@@ -95,9 +90,11 @@ export default function CVPreview({ content, isGenerating, cvId }: CVPreviewProp
       </div>
 
       {/* CV document */}
-      <div className="cv-wrap bg-white border border-oat rounded-card p-8 overflow-auto">
-        <style>{CV_STYLES}</style>
-        <div className="cv-doc" dangerouslySetInnerHTML={{ __html: content }} />
+      <div className="cv-print-area">
+        <div className="cv-wrap bg-white border border-oat rounded-card p-8 overflow-auto">
+          <style>{CV_STYLES}</style>
+          <div className="cv-doc" dangerouslySetInnerHTML={{ __html: content }} />
+        </div>
       </div>
     </div>
   )

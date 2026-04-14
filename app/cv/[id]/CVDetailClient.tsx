@@ -59,14 +59,10 @@ export default function CVDetailClient({ cv }: { cv: CV }) {
 
       {/* CV */}
       <main className="max-w-4xl mx-auto px-4 py-8">
+        <div className="cv-print-area">
         <div ref={printRef}
           className="cv-wrap bg-white border border-oat rounded-card p-10 md:p-14">
           <style>{`
-            @media print {
-              .no-print { display: none !important; }
-              body { background: white !important; }
-              .cv-wrap { box-shadow: none !important; border: none !important; border-radius: 0 !important; padding: 0 !important; }
-            }
             .cv-doc { font-family: 'Times New Roman', Times, Georgia, serif; font-size: 11pt; color: #000; line-height: 1.45; }
             .cv-doc h1 { font-size: 22pt; font-weight: bold; margin: 0 0 2pt; letter-spacing: -0.01em; }
             .cv-doc .cv-subtitle { font-size: 11pt; font-weight: normal; margin: 0 0 6pt; }
@@ -86,6 +82,7 @@ export default function CVDetailClient({ cv }: { cv: CV }) {
             .cv-doc a { color: #000; text-decoration: underline; }
           `}</style>
           <div className="cv-doc" dangerouslySetInnerHTML={{ __html: cv.content }} />
+        </div>
         </div>
       </main>
     </div>
