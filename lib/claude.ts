@@ -12,6 +12,15 @@ function getGroq(): Groq {
 export async function generateCV(formData: CVFormData): Promise<string> {
   const groq = getGroq()
 
+  // Normalize text: collapse broken parentheses spread across multiple lines
+  // e.g. "Title (\n08/2019\n)" → "Title (08/2019)"
+  function norm(s: string): string {
+    return s
+      .replace(/\(\s*\n+\s*/g, '(')   // "(\n  text" → "(text"
+      .replace(/\s*\n+\s*\)/g, ')')   // "text\n)" → "text)"
+      .replace(/\s*\n+\s*-\s*/g, ' - ') // "Title\n- Company" → "Title - Company"
+  }
+
   const lines: string[] = [
     `Full Name: ${formData.fullName}`,
     `Job Title: ${formData.jobTitle}`,
@@ -30,8 +39,8 @@ export async function generateCV(formData: CVFormData): Promise<string> {
     formData.education,
     '',
     'PROFESSIONAL EXPERIENCE:',
-    formData.experience,
-    formData.internships ? `\nINTERNSHIPS & CERTIFICATES:\n${formData.internships}` : '',
+    norm(formData.experience),
+    formData.internships ? `\nINTERNSHIPS & CERTIFICATES:\n${norm(formData.internships)}` : '',
     formData.languages   ? `\nLANGUAGES:\n${formData.languages}` : '',
     '',
     'SKILLS:',
@@ -60,8 +69,8 @@ STRICT RULES — follow exactly:
 1. Copy the user's text verbatim. Do NOT reword, add, remove, or reorder anything.
 2. If the user writes "Microsoft Word & Excel" as ONE item, it stays as ONE <li>. Never split a single item into multiple lines or bullets.
 3. Each line / comma-separated skill the user writes becomes exactly one <li> — nothing more, nothing less.
-4. For Professional Experience: <li><strong>Title - Company (Dates)</strong> then a nested <ul> with one <li> per bullet the user wrote.
-5. For Internships & Certificates: each entry is one <li><strong>Name – Provider</strong> (Date) — Description</li> on a single line. No line breaks inside the <li>.
+4. For Professional Experience: each job MUST be <li><strong>Title - Company (Dates)</strong> — the entire title+company+dates on ONE single line inside <strong>, never split across lines or broken by a newline. Then a nested <ul> with one <li> per bullet point.
+5. For Internships & Certificates: each entry is one <li><strong>Name – Provider (Date)</strong> — Description</li> — everything on ONE single line. No newlines inside any <li>.
 6. For Languages: <div class="cv-two-col"> with one <p> per language entry.
 7. For Skills: divide the user's skill items roughly in half, put first half in a <ul> and second half in another <ul>, both inside <div class="cv-two-col">.
 8. Omit any section where no data was provided.
