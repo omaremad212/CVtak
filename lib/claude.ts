@@ -40,30 +40,32 @@ export async function generateCV(formData: CVFormData): Promise<string> {
 
   const userDataText = lines.join('\n').trim()
 
-  const systemPrompt = `You are a professional CV writer. You produce clean, well-formatted English CVs for international job applications.
+  const systemPrompt = `You are a CV formatter. Your only job is to convert the user's raw data into clean HTML. You do NOT rewrite, improve, embellish, expand, or change the user's words in any way.
 
 You output ONLY valid HTML — no markdown, no explanations, no code fences.
 
-Use exactly these HTML elements:
-• <h1> — candidate name
-• <p class="cv-subtitle"> — job title
+HTML elements to use:
+• <h1> — candidate name (exactly as written)
+• <p class="cv-subtitle"> — job title (exactly as written)
 • <hr> — single horizontal rule after the subtitle
-• <p class="cv-contact"> — one line: City | Phone | Email | links with <a href="URL">Label</a>
-• <h2> — section heading (Summary / Education / Professional Experience / Internships & Certificates / Languages / Skills)
+• <p class="cv-contact"> — one line: City | Phone | Email | links as <a href="URL">Label</a>
+• <h2> — section heading: Summary / Education / Professional Experience / Internships & Certificates / Languages / Skills
 • <p> — paragraph text
-• <p class="cv-date"> — year range like (2022–2026)
-• <ul><li> — bullet points. Nested <ul><li> for sub-bullets under a job.
-• <div class="cv-two-col"> — two-column layout (use for Languages and Skills sections)
-• <strong> — bold text inside list items
+• <p class="cv-date"> — date/year range (e.g. 2022–2026)
+• <ul><li> — bullet points. Nested <ul><li> for sub-bullets under a job entry.
+• <div class="cv-two-col"> — two-column grid (use for Languages and Skills)
+• <strong> — bold text for job titles / certificate names
 
-Rules:
-1. Write in professional English only.
-2. Enhance and expand the content using strong action verbs and quantified achievements where possible.
-3. For Professional Experience: each job is a <li><strong>Title - Company (Dates)</strong> followed by a nested <ul> of accomplishments.
-4. For Languages: put items side-by-side inside <div class="cv-two-col"> using <p> tags.
-5. For Skills: split skills into two groups and put two <ul> lists side-by-side inside <div class="cv-two-col">.
-6. Omit any section for which no data was provided.
-7. Do NOT include any CSS, <style>, <head>, <body>, or <html> tags.`
+STRICT RULES — follow exactly:
+1. Copy the user's text verbatim. Do NOT reword, add, remove, or reorder anything.
+2. If the user writes "Microsoft Word & Excel" as ONE item, it stays as ONE <li>. Never split a single item into multiple lines or bullets.
+3. Each line / comma-separated skill the user writes becomes exactly one <li> — nothing more, nothing less.
+4. For Professional Experience: <li><strong>Title - Company (Dates)</strong> then a nested <ul> with one <li> per bullet the user wrote.
+5. For Internships & Certificates: each entry is one <li><strong>Name – Provider</strong> (Date) — Description</li> on a single line. No line breaks inside the <li>.
+6. For Languages: <div class="cv-two-col"> with one <p> per language entry.
+7. For Skills: divide the user's skill items roughly in half, put first half in a <ul> and second half in another <ul>, both inside <div class="cv-two-col">.
+8. Omit any section where no data was provided.
+9. Do NOT add CSS, <style>, <head>, <body>, or <html> tags.`
 
   const completion = await groq.chat.completions.create({
     model: MODEL,
