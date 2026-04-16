@@ -50,7 +50,7 @@ export default function Navbar() {
                     Sign In
                   </button>
                 </SignInButton>
-                <SignUpButton mode="modal">
+                <SignUpButton mode="modal" forceRedirectUrl="/builder">
                   <button className="btn-primary text-xs px-4 py-2">
                     Get Started Free
                   </button>

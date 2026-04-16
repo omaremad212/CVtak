@@ -5,9 +5,23 @@ import Image from 'next/image'
 import { motion } from 'framer-motion'
 import Navbar from '@/components/Navbar'
 import { AuroraBackground } from '@/components/ui/aurora-background'
-import { SignUpButton } from '@clerk/nextjs'
+import { SignUpButton, useUser } from '@clerk/nextjs'
 
 export default function HomePage() {
+  const { isSignedIn } = useUser()
+
+  // Reusable CTA button — goes to /builder directly if signed in,
+  // otherwise opens sign-up modal then redirects to /builder
+  const CTAButton = ({ label = 'Create your CV free →', className = '' }: { label?: string; className?: string }) =>
+    isSignedIn ? (
+      <Link href="/builder" className={className || 'btn-primary text-base px-7 py-3.5'}>
+        {label}
+      </Link>
+    ) : (
+      <SignUpButton mode="modal" forceRedirectUrl="/builder">
+        <button className={className || 'btn-primary text-base px-7 py-3.5'}>{label}</button>
+      </SignUpButton>
+    )
   return (
     <div className="min-h-screen bg-cream">
       <Navbar />
@@ -42,11 +56,7 @@ export default function HomePage() {
             </p>
 
             <div className="flex flex-wrap items-center gap-4">
-              <SignUpButton mode="modal">
-                <button className="btn-primary text-base px-7 py-3.5">
-                  Create your CV free →
-                </button>
-              </SignUpButton>
+              <CTAButton />
               <Link href="#features" className="btn-outlined text-base px-7 py-3.5 bg-white/80 backdrop-blur-sm">
                 See features
               </Link>
@@ -210,11 +220,7 @@ export default function HomePage() {
                   </li>
                 ))}
               </ul>
-              <SignUpButton mode="modal">
-                <button className="w-full bg-white text-off-black font-semibold py-2.5 px-5 rounded-btn text-sm transition-transform duration-150 hover:scale-105 active:scale-90">
-                  Get started free →
-                </button>
-              </SignUpButton>
+              <CTAButton label="Get started free →" className="w-full bg-white text-off-black font-semibold py-2.5 px-5 rounded-btn text-sm transition-transform duration-150 hover:scale-105 active:scale-90" />
             </div>
           </div>
         </div>
@@ -239,11 +245,7 @@ export default function HomePage() {
             <p className="text-sand text-base mb-8">
               Create your professional CV now and start applying.
             </p>
-            <SignUpButton mode="modal">
-              <button className="bg-white text-off-black font-bold px-8 py-3.5 rounded-btn text-sm transition-transform duration-150 hover:scale-105 active:scale-90">
-                Create your CV free →
-              </button>
-            </SignUpButton>
+            <CTAButton className="bg-white text-off-black font-bold px-8 py-3.5 rounded-btn text-sm transition-transform duration-150 hover:scale-105 active:scale-90" />
           </div>
         </motion.div>
       </AuroraBackground>
